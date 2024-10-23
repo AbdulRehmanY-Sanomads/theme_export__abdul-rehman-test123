@@ -1,0 +1,130 @@
+<h2>HELOW MANU FORM THE sections called in template product.liquid</h2>
+
+<section id="drawer " class="side__page ">
+  <cart-drawer>
+    <h1>THE AJAX CART PAGE</h1>
+    <h1>HEllow MANU from THE CART DRAWER file placed in SECTIONS Folder</h1>
+    <h2>Below is the Structure of AJAX Cart DRAWER</h2>
+
+    {% if cart.empty? %}
+      <p>Your Cart IS empty</p>
+      <a href="https://abdul-rehman-test123.myshopify.com/?_ab=0&_bt=eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWRoWW1SMWJDMXlaV2h0WVc0dGRHVnpkREV5TXk1dGVYTm9iM0JwWm5rdVkyOXRCam9HUlZRPSIsImV4cCI6IjIwMjQtMDktMjRUMTA6MDM6NDQuNDc3WiIsInB1ciI6InBlcm1hbmVudF9wYXNzd29yZF9ieXBhc3MifX0%3D--a4223d80f85fbed659ec9c4d6766323ec0df9fc6&_fd=0&_sc=1">
+        YOUR AJAX CART DRAWER IS EMPTY</a
+      >
+    {% else %}
+      <h2>YOUR CART ({{ cart.item_count }})</h2>
+      {% form 'cart', cart %}
+        {% for item in cart.items %}
+          <div>
+            <img src="{{ item.image | image_url : width : 200 }}">
+            <span>ITEM Variant name: {{ item.title }}</span>
+            <p class="price">Price-Per-Unit: {{ item.price | money }}</p>
+            <p>Total-Price: {{ item.final_line_price | money }}</p>
+            <input name="updates[]" value="{{ item.quantity }}">
+            <a href="{{ item.url_to_remove }}">REMOVE</a>
+          </div>
+        {% endfor %}
+        <hr>
+        <p>TOTAL:{{ cart.total_price | money }}</p>
+        <button type="submit" name="update" class="btn">UPDATE</button>
+        <!-- //name property is special PREDEFINED -->
+        <button type="submit" name="checkout" class="btn">CHECKOUT</button>
+        <!-- //name property is special PREDEFINED -->
+      {% endform %}
+    {% endif %}
+  </cart-drawer>
+</section>
+
+<script>
+   class CartDrawer extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  // Call this method manually to initialize the cart drawer
+  init() {
+    if (this.querySelector(".cart-drawer")) {
+      this.addCartDrawerListeners();
+      this.setupAddToCartListeners();
+      this.setupCartLinkListeners();
+      this.setupClearCartListener();  // Add this line to initialize the clear cart button listener
+    }
+  }
+</script>
+
+{% comment %}
+  this code is of robby all copied dont even try a little bit to understnad it but does not havr any functioning eithr everything is
+                                                                      uselessss
+  <div class="cart-drawer">
+    <div class="cart-drawer-box">
+      Header section
+      <header class="cart-drawer-header">
+        <h2>Your cart</h2>
+
+        <div class="cart-drawer-header-right">
+          <span class="cart-drawer-header-right-items">{{ cart.item_count }} items</span>
+
+          <button class="cart-drawer-header-right-close" type="button">
+            {% render 'x.svg' %}
+          </button>
+        </div>
+      </header>
+
+      {% form 'cart', cart, class: 'cart-drawer-form' %}
+        {% if cart.item_count == 0 %}
+          <p class="cart-drawer-empty">Your cart is empty</p>
+        {% else %}
+          <div class="cart-drawer-items">
+            {% for item in cart.items %}
+              <div class="cart-drawer-item" data-line-item-key="{{ item.key }}">
+                <div class="cart-drawer-item-image">
+                  <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
+                </div>
+                <div class="cart-drawer-item-main">
+                  <div class="cart-drawer-item-main-flex">
+                    <div class="cart-drawer-item-main-flex-left">
+                      <h3>
+                        <a href="{{ item.url }}">{{ item.product.title }}</a>
+                      </h3>
+                      <span>{{ item.variant.title }}</span>
+                      <div class="cart-drawer-quantity-selector">
+                        <button class="cart-drawer-quantity-selector-minus" type="button">
+                          {% render 'minus.svg' %}
+                        </button>
+                        <input type="text" readonly value="{{ item.quantity }}">
+                        <button class="cart-drawer-quantity-selector-plus" type="button">{% render 'plus.svg' %}</button>
+                      </div>
+                    </div>
+                    <div class="cart-drawer-item-main-flex-right">
+                      <span>{{ item.final_line_price | money }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <footer class="cart-drawer-footer">
+            {% if cart.total_discounts > 0 %}
+              <div class="cart-drawer-footer-row">
+                <h3>Discounts</h3>
+                <span>{{ cart.total_discounts | money }}</span>
+              </div>
+            {% endif %}
+            <div class="cart-drawer-footer-row">
+              <h3>Subtotal</h3>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+            <button type="submit" name="checkout" class="cart-drawer-button">Checkout</button>
+          </footer>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Cart drawer"
+}
+{% endschema %}

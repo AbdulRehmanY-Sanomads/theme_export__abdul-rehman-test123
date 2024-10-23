@@ -1,0 +1,70 @@
+<page-name pagename__style="collection_name" pageName="{{ collections['my-clothes-collection'].title }}"></page-name>
+
+<div class="flex evenly">
+  {% for product in collections['my-clothes-collection'].products %}
+    <div class="collection__product">
+      <a href="{{ product.url }}">
+        <product-name heading="{{ product.title }}"></product-name>
+        <img src="{{ product.featured_image |img_url :'medium' }}">
+        <p>{{ product.price | money }}</p>
+
+        <!-- initialize Variable to store total Inventory -->
+        {% assign total_inventory = 0 %}
+        {% for variant in product.variants %}
+          {% assign total_inventory = total_inventory | plus: variant.inventory_quantity %}
+        {% endfor %}
+        <red-text>In-Stock:{{ total_inventory }}</red-text>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+   class pageName extends HTMLElement{
+     constructor(){
+       super();
+       this.style.color = "#ffa335";
+       this.style.textAlign = "center";
+       this.style.fontWeight = "900";
+       this.style.fontSize = "52px";
+       this.style.marginBottom = "40px";
+       
+       const pagenameStyle = this.getAttribute('pagename__style');  // Get class name from attribute
+       const pageName = this.getAttribute('pageName');
+       
+       this.innerHTML = `<p class="${pagenameStyle}"> ${pageName}</p>`
+     }
+   }
+  customElements.define('page-name', pageName);
+
+
+
+
+
+
+
+
+  
+   class productName extends HTMLElement{
+      constructor(){
+        super();
+        this.style.color = "red";
+        this.style.fontWeight = "600";
+        
+        const heading = this.getAttribute('heading');
+        this.innerHTML = `<p>${heading}</p>`;
+      }
+    }
+  customElements.define('product-name', productName);
+
+
+ 
+
+ class RedTextComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.innerHTML = `<p style="color: #46a0c8;">${this.textContent}</p>`;
+  }
+}
+customElements.define('red-text', RedTextComponent);
+</script>

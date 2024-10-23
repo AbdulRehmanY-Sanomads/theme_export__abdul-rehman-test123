@@ -1,0 +1,466 @@
+
+  
+/* utility classes */
+.flex{
+  display : flex;
+}
+.hcenter{
+  justify-content : center;
+}
+.vcenter{
+  align-items : center;
+}
+.evenly{
+  justify-content : space-evenly ;
+}
+p{
+  margin : 0;
+  padding : 0;
+}
+
+/* TOP Navbar Menus */
+
+  .top__nav--bar{
+    padding : 0 100px
+  }
+  li{
+    list-style-type: none;
+  }
+ a{
+  color : #ff7c00;
+  text-decoration : none;
+  font-size: 20px;
+  font-weight: 600;
+  }
+ .main__logo img{
+    width : 285px;
+   height : 85px;
+}
+
+  /* collection page section */
+
+.collection_name{
+  margin-top : 20px;
+  margin-bottom : 42px;
+}
+
+.collection__product{
+  text-align : center;
+}
+
+
+/*<><><><><><><><><><><><> Product Page <><><><><><><><><><><><>*/
+
+.product__page{
+  padding-top : 20px ;
+}
+
+.grid--container{
+  display : grid ;
+  grid-template-columns : 10% 50% 40% ;
+}
+              /* Thumbnails Left Side */
+.thumbnail img{
+  width : 96%;
+  margin-bottom : 4px;
+  margin-right : 0px;
+  height: 171.1px;
+}
+
+.selected img{
+  border : 2px solid orange;
+}
+        /* thumbnails bottom in 2nd grid */
+.grid{
+  display : grid;
+  grid-template-columns : 20% 20% 20% 20% 20% ;
+  width : 100%;
+  margin : 4px 0; 
+}
+
+/* Product Description WHOLE BOX*/
+   .product__details{
+      padding: 0 30px 20px 10px
+  }
+  
+  .product__name{
+    font-family: "Quicksand", sans-serif;
+    font-weight : 100;
+    font-style: oblique;
+    font-size: 40px;
+    margin-top: 5px;
+
+  }
+
+  .product-price{
+    display : inline-block;
+    margin-right : 6px;
+  }
+  .product-compare{
+    display : inline-block;
+     color : #a9a9a9;
+    text-decoration: line-through;
+    font-weight: 200;
+  }
+    
+  .product-discount{
+      display: inline-block;
+    font-size: 15px;
+    font-family: Agdasima,sans-serif;
+    background-color: #300606;
+    color: #eaf0f5;
+    border-radius: 10px;
+    width: 23px;
+    margin-left: 5px;
+    padding: 3px 13px 3px 8px;
+    position:relative;
+      top : -2px;
+  }
+.variant-stock{
+  border: 1px solid grey;
+    width: 95px;
+    margin: 15px 0;
+    padding: 2px 4px;
+    background-color: #ccc;
+      font-size: 13px;
+
+}
+                       /* PRODUCT VARIANT OPTIONS */
+
+  .product-option {
+  margin: 20px 0;
+}
+
+.option-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.option-box {
+  margin: 10px;
+    padding: 3px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 40px;
+    text-align: center;
+    transition: background-color .3s;
+}
+.option-box:last-child {
+  margin-bottom: 11px;
+}
+    
+.option-box label {
+  cursor: pointer;
+}
+
+.hidden-radio {
+  display: none; /* Hide the radio button */
+}
+
+.option-box:hover {
+  background-color: #b7a482; /* B-g on hover */
+}
+
+.option-box input:checked + label {
+   /* Style for selected option */
+  color: #bdb7b7;
+    font-weight: 900;
+    font-size: 16.5px;
+}
+}
+.Black{
+  background-color : orange;
+  color :white;
+}
+.Blue{
+  background-color : blue;
+  color :white;
+}
+.Green{
+  background-color : green;
+  color :white;
+}
+.White{
+  background-color : white; 
+  color : #000000;
+}
+.Orange{
+    background-color : orange;
+  color : #000080;
+}
+.Navy{
+  background-color : navy;
+  color :white;
+}
+.Yellow{
+  background-color : yellow;
+     color : #000000  ;
+}
+.Gray{
+  background-color : grey;
+  color : #333333;
+}
+
+  
+                    /* Styling for the old  quantity selector that has no buttons */
+/*
+.product-option {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.product-option label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+  text-transform: capitalize; 
+}
+
+.product-option input {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.product-option input:focus {
+  border-color: #ffa335;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 163, 53, 0.5);
+}
+*/
+
+                        /* Styling for the New Qunatity Selector that has buttons + - */
+
+.quantity-selector {
+  display: inline-block;
+  align-items: center; 
+  gap: 10px; 
+  margin-bottom : 20px;
+}
+.quantity__selector--box{
+  border : 1px solid  #ffa335;
+     padding: 0px 0px;
+    position: relative;
+    top: 1px;  
+    margin-top: 15px;
+}
+.quantity-label {
+  font-size: 18px;
+  font-weight: 800; 
+  display :none;   /*THE WORD THAT DISPLAYS THE LABEL QUANTITY*/
+}
+
+.quantity-button {
+  background-color: #ffa335;
+    color: white;
+    border: none;
+    border: none;
+    padding: 13px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 18px;
+  transition: background-color 0.3s;
+}
+  
+
+.quantity-button:hover {
+  background-color: #e59400; 
+}
+
+.quantity-input {
+  width: 80px; 
+  text-align: center; 
+  font-size: 16px; 
+  border: none;
+  border-radius: 4px;
+  padding: 0px; 
+}
+
+.quantity-input:focus {
+  border-color: #ffa335; /* Change border color on focus */
+  outline: none; /* Removes default focus outline */
+}
+
+
+          /* ADD TO CART BUTTON STYLING */
+.add__to__cart--btn{
+  display: inline-block;
+    width: 60%;
+        padding: 15px 0;
+    font-style: inherit;
+    font-weight: 700;
+    letter-spacing: 3px;
+    word-spacing: 8px;
+  cursor : pointer;
+}
+
+                      /* BUY IT NOW BUTTON */
+
+  .buy__it__now--btn{
+    padding: 15px 0;
+    font-weight: 700;    
+    width: 99%;
+    letter-spacing: 3px;
+    word-spacing: 8px;
+    cursor :pointer;
+  }
+
+.buy__it__now--btn a{
+  color : black;
+      font-size: 13px;
+
+}
+
+        /* Q/A sections drawer Styling */
+
+  /* See the Web components styling section in the start because this section is created using the web components 
+  so as per decided it's styling will be done in a single section to make it organizeable */
+ faq-section {
+            max-width: 600px;
+            margin: 20px auto;
+            /* border: 1px solid #ccc; */
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        faq-item {
+            display: block;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+
+        .faq-question:hover {
+            background-color: #f0f0f0;
+        }
+
+        .faq-answer {
+            display: none; /* Initially hide the answer */
+            padding: 15px;
+            background-color: #fff;
+        }
+
+        .arrow {
+            transition: transform 0.3s;
+        }
+
+        .faq-question.open .arrow {
+            transform: rotate(180deg); /* Rotate arrow when open */
+        }
+
+
+  /* horizontal line stylin WEB COMPONENT */
+
+   horizontal-line {
+            display: block;
+            position: relative;
+            width: 98%;
+            height: 2px;
+            cursor : pointer;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            background-color: #ccc; /* Default color */
+            overflow: hidden; /* Ensure the pseudo-element doesn't overflow */
+        }
+
+        horizontal-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%; /* Start off-screen to the left */
+            width: 100%;
+            height: 100%;
+            background-color: #ff5733; /* Color to change to on hover */
+            transition: left 0.7s ease; /* Transition effect */
+        }
+
+        horizontal-line:hover::before {
+            left: 0; /* Move to the right on hover */
+        }
+
+
+
+
+
+
+
+  
+
+
+        
+
+   .side__page{
+            background-color: rgb(35, 35, 50);
+            color: rgb(255, 24, 24);
+            text-align: center;
+            /* width: 100%; */
+            position: absolute;
+            min-height: 100vh;
+            top: 0;
+       padding : 16px 10px 0px 36px;
+            /* font-size: 3rem; */
+            right: -666px;
+            /* right: -400px; */
+             max-width: 600px;
+            transition: all 0.3s ease;
+        }
+        .side__page.active{
+             right: 0;
+        }
+
+/* 
+.side__page{
+  max-width : 600px;
+  min-height: 100vh;
+  position : absolute ;
+  right : 0px ;
+  top : 0px ;
+  background-color : #85ab84;
+  padding : 16px 10px 0px 36px;
+}
+.active{
+  right : -620px;
+} */
+  .side__page img{
+    width : 100px ;
+    margin-top : 15px;
+  }
+  .side__page span{
+    font-weight: bold;
+  }
+.price{
+  margin-top : 8px;
+  
+}
+
+.btn{
+  padding : 10px 24px;
+  text-decoration : none ;
+  border : none;
+  background-color : #40b83d;
+  margin-top: 17px;
+    margin-right: 15px;
+  margin-bottom : 50px ;
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,13 @@
+<!-- this is the section displayed on the MAIN PAGE -->
+<!-- this below coe is used to Derive links for the MAIN MEnU LIKE HOME CATLOG SHOP CONTACT FAQ -->
+
+<div class="flex hcenter main__logo">
+  <img src="https://cdn.shopify.com/s/files/1/0714/1595/5700/files/murphy_main_logo.png?v=1729109980">
+</div>
+
+<div class="flex evenly top__nav--bar ">
+  <!-- derives the link from the dashboard custom made NAVBAR -->
+  {% for link in linklists['top-custom-menu'].links %}
+    <li>{{ link.title | link_to: link.url }}</li>
+  {% endfor %}
+</div>

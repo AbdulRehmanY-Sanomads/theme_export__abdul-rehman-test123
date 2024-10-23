@@ -1,0 +1,19 @@
+<html>
+  <head>
+    {{ content_for_header }}
+    {{ 'mystyle.css' | asset_url | stylesheet_tag }}
+    {% render 'header' %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    {{ content_for_layout }}
+    {% render 'collection-page' %}
+
+    {% render 'temporary' %}
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/url-parse@1.5.10/dist/url-parse.min.js"></script> -->
+  </body>
+</html>

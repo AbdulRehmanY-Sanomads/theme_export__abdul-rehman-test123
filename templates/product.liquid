@@ -1,0 +1,274 @@
+<div class="product__page">
+  <page-name pagename__style="collection_name" pageName="{{ product.title }}"></page-name>
+
+  <div class="grid--container">
+    <div class="thumbnail">
+      {% assign myimg = product.selected_or_first_available_variant.featured_image %}
+      {% for image in product.images %}
+        {% if forloop.index <= 7 %}
+          {% assign variant = product.variants | where: 'featured_image.id', image.id | first %}
+          <p
+            data-variant-id="{% if variant %}{{ variant.id }}{% endif %}"
+            class="{% if image == myimg %}selected{% endif %}"
+            data-id="{{  image.id }}"
+          >
+            <img src="{{ image | img_url : '660x' }}">
+          </p>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="dynamic">
+      <img src="{{ product.selected_or_first_available_variant.featured_image | img_url : '660x' }}">
+      <div class="thumbnail thumb grid ">
+        {% for image in product.images %}
+          {% if forloop.index > 6 %}
+            {% assign variant = product.variants | where: 'featured_image.id', image.id | first %}
+            <p
+              data-variant-id="{% if variant %}{{ variant.id }}{% endif %}"
+              class="{% if image == myimg %}selected{% endif %}"
+              data-id="{{ image.id }}"
+            >
+              <img src="{{ image | img_url: '660x' }}">
+            </p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="product__details">
+      <!-- This below Code is the DSCRIPTIVE info regarding the SPECIFIC PRODUCT(title price img id description -->
+      <h1 class="product__name">{{ product.title }}</h1>
+      <h2 class="product-price">{{ product.selected_or_first_available_variant.price | money }}</h2>
+      <h2 class="product-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</h2>
+
+      {% assign price = product.selected_or_first_available_variant.price %}
+      {% assign compare_at_price = product.selected_or_first_available_variant.compare_at_price %}
+
+      {% if compare_at_price > price %}
+        {% assign discount_amount = compare_at_price | minus: price %}
+        {% assign discount_percentage_step = discount_amount | times: 100 %}
+        {% assign discount_percentage = discount_percentage_step | divided_by: compare_at_price %}
+        {% assign discount_percentage = discount_percentage | round: 0 %}
+      {% else %}
+        {% assign discount_percentage = 0 %}
+      {% endif %}
+      <h2 class="product-discount">-{{ discount_percentage }}%</h2>
+
+      <div class="dynamic2">
+        <img src="{{ product.selected_or_first_available_variant.featured_image | img_url : 'medium' }}">
+      </div>
+
+      <!-- TElls How many Units left in stock -->
+      {% if product.variants.size >= 0 %}
+        {% assign selected_variant = product.selected_or_first_available_variant %}
+        <div class="variant-stock">
+          <i class="fa-regular fa-bell"></i> &nbsp;{{ selected_variant.inventory_quantity }} IN STOCK
+        </div>
+      {% endif %}
+
+      <horizontal-line></horizontal-line>
+
+      <p class="product__description">DESCRIPTION: {{ product.description }}</p>
+
+      <horizontal-line></horizontal-line>
+
+      {% form action="/cart/add" 'product', product %}
+        <input
+          class="product-id"
+          type="hidden"
+          name="id"
+          value="{{ product.selected_or_first_available_variant.id }}"
+        >
+
+        {% comment %}
+              {% if product.variants.size <= 1 %} THIS PRODUCT HAS ONLY ONE VARIANT {% else %} <div
+                  class="product-option">
+                  {% for option in product.options_with_values %}
+                  <legend>{{ option.name }}</legend>
+                  {% for value in option.values %}
+                  <div>
+                      <input {% if option.selected_value==value %} checked {% endif %} type="radio"
+                          name="{{ option.name }}" value="{{ value }}"
+                          id="{{ option.name | handleize }} - {{ value | handleize }}">
+                      <label for="{{ option.name | handleize }}-{{ value | handleize }}"> {{ value }}</label>
+                  </div>
+                  {% endfor %}
+                  {% endfor %}
+          </div>
+          {% endif %}
+        {% endcomment %}
+        <!--
+          upper code is the same below code and the latest code and use for styling and starts form here and ands where the same comment
+          is used it has the same functionality
+        -->
+        {% if product.variants.size <= 1 %}
+          THIS PRODUCT HAS ONLY ONE VARIANT
+        {% else %}
+          <div class="product-option">
+            {% for option in product.options_with_values %}
+              <legend>{{ option.name }}</legend>
+
+              <div class="option-container">
+                {% for value in option.values %}
+                  <div class="option-box {{ value }}" data-id="{{ option.name | handleize }}-{{ value | handleize }}">
+                    <input
+                      {% if option.selected_value == value %}
+                        checked
+                      {% endif %}
+                      type="radio"
+                      name="{{ option.name }}"
+                      value="{{ value }}"
+                      id="{{ option.name | handleize }}-{{ value | handleize }}"
+                      class="hidden-radio"
+                    >
+                    <label for="{{ option.name | handleize }}-{{ value | handleize }}">{{ value }}</label>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <horizontal-line></horizontal-line>
+
+        <!--
+          this duplicate code used for styling ends here is upper code is un commneted the the below code is removed uptill here
+        -->
+
+        {% comment %}
+          <div class="product-option">
+              <label for="quantity">QuAnTiTy</label>
+              <input id="quantity" value="1" name="quantity">
+          </div>
+        {% endcomment %}
+        <!-- the upper code is replaced by the folowing below code and make sure it has the sdame functionality -->
+        <div class="quantity-selector">
+          <label class="quantity-label" for="updates quantity">Quantity:</label>
+          <div class="quantity__selector--box">
+            <button class="cart-page-quantity-minus quantity-button" type="button" data-line-item-key="{{ item.key }}">
+              -
+            </button>
+            <input
+              class="quantity-input"
+              id="quantity"
+              name="updates[] quantity"
+              min="1"
+              value="{{ item.quantity | default: 1 }}"
+            >
+            <button class="cart-page-quantity-plus quantity-button" type="button" data-line-item-key="{{ item.key }}">
+              +
+            </button>
+          </div>
+        </div>
+
+        <!-- this above replaced duplicate code ends here -->
+
+        <button class="cart--btn add__to__cart--btn" type="submit" data-product-id="{{ product.id }}">
+          ADD TO CART
+        </button>
+        <button class="buy__it__now--btn">
+          <a href="https://abdul-rehman-test123.myshopify.com/checkout">BUY IT NOW</a>
+        </button>
+
+        <horizontal-line></horizontal-line>
+
+        {% comment %}
+          <p name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              ID:{{ product.selected_or_first_available_variant.id }}
+          </p>
+          <p name="data-product-id" data-product-id="{{ product.id }}">data-product-id = "{{ product.id }}"</p>
+        {% endcomment %}
+      {% endform %}
+
+      <faq-section>
+        <details-drawer
+          question="Descriiption"
+          answer="
+            Introducing our versatile and sustainable women's product, crafted with premium quality materials to elevate your
+            style game. Its timeless design and flattering fit make it a must-have addition to any wardrobe, suitable for any occasion.
+            Upgrade your style and make a difference with our latest product.
+          "
+        ></details-drawer>
+        <horizontal-line></horizontal-line>
+        <details-drawer
+          question="Details"
+          answer="
+            <li>Premium, high-quality materials</li><li>Moisture-wicking fabrics</li>
+            <li>Flatlock seams to reduce chafing</li> <li>Breathable mesh inserts for enhanced ventilation</li>
+          "
+        ></details-drawer>
+        <horizontal-line></horizontal-line>
+        <details-drawer
+          question="Care"
+          answer="
+              <li>Machine wash on a cold, gentle cycle with like colors</li><li>Do not bleach or iron</li>
+            <li>Avoid using fabric softeners, as they can damage moisture-wicking properties</li><li>Line dry and do not dry clean</li>
+            <li>Follow care instructions for best results</li>
+          "
+        ></details-drawer>
+        <horizontal-line></horizontal-line>
+        <details-drawer
+          question="Delivery & Returns"
+          answer="
+            We aim to make the delivery process as seamless as possible. Check out our delivery options and rates, and if for
+            any reason you are not satisfied with your purchase, our easy returns policy has got you covered.
+          "
+        ></details-drawer>
+        <horizontal-line></horizontal-line>
+        <details-drawer
+          question="Gift Packing"
+          answer="
+            Surprise your friends and loved ones with a gift they'll love. Add our gift packing option to your purchase to
+            receive a stylish package with a personalized message, perfect for any occasion.
+          "
+        ></details-drawer>
+        <horizontal-line></horizontal-line>
+      </faq-section>
+    </div>
+  </div>
+  <!-- CART DRAWER LIQUID CODE -->
+
+  <section id="drawer " class="side__page ">
+    <cart-drawer>
+      <h1>THE AJAX CART PAGE</h1>
+      <h1>HEllow MANU from THE CART DRAWER file placed in SECTIONS Folder</h1>
+      <h2>Below is the Structure of AJAX Cart DRAWER</h2>
+
+      {% if cart.empty? %}
+        <p>Your Cart IS empty</p>
+        <a
+          href="
+            https://abdul-rehman-test123.myshopify.com/?_ab=0&_bt=eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWRoWW1SMWJDMXlaV2h0WVc0dGR
+            HVnpkREV5TXk1dGVYTm9iM0JwWm5rdVkyOXRCam9HUlZRPSIsImV4cCI6IjIwMjQtMDktMjRUMTA6MDM6NDQuNDc3WiIsInB1ciI6InBlcm1hbmVudF9wYXNzd29
+            yZF9ieXBhc3MifX0%3D--a4223d80f85fbed659ec9c4d6766323ec0df9fc6&_fd=0&_sc=1
+          "
+        >
+          YOUR AJAX CART DRAWER IS EMPTY</a
+        >
+      {% else %}
+        <h2>YOUR CART ({{ cart.item_count }})</h2>
+        {% form 'cart', cart %}
+          {% for item in cart.items %}
+            <div>
+              <img src="{{ item.image | image_url : width : 200 }}">
+              <span>ITEM Variant name: {{ item.title }}</span>
+              <p class="price">Price-Per-Unit: {{ item.price | money }}</p>
+              <p>Total-Price: {{ item.final_line_price | money }}</p>
+              <input name="updates[]" value="{{ item.quantity }}">
+              <a href="{{ item.url_to_remove }}">REMOVE</a>
+            </div>
+          {% endfor %}
+          <hr>
+          <p>TOTAL:{{ cart.total_price | money }}</p>
+          <button type="submit" name="update" class="btn">UPDATE</button>
+          <!-- //name property is special PREDEFINED -->
+          <button type="submit" name="checkout" class="btn">CHECKOUT</button>
+          <!-- //name property is special PREDEFINED -->
+        {% endform %}
+      {% endif %}
+    </cart-drawer>
+  </section>
+</div>
+
+<script src="{{ 'myscript.js' | asset_url }}"></script>
